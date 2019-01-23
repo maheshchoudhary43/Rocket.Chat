@@ -6,11 +6,28 @@
 
 	padding: 0 1.5rem;
 
+	&-fields {
+		display: flex;
+		flex-direction: row;
+
+		height: 89px;
+		padding: 10px 0;
+	}
+
+	&-dropdown {
+		height: 48px;
+		margin-right: 10px;
+	}
+
 	&-search {
-		width: 100%;
+		height: 48px;
 
 		& .rc-icon {
 			width: 0.875rem;
+		}
+
+		&-wide {
+			width: 100%;
 		}
 	}
 

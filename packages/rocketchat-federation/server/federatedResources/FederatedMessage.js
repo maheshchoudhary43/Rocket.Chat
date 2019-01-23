@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { FileUpload } from 'meteor/rocketchat:file-upload';
 
 import FederatedResource from './FederatedResource';
 import FederatedRoom from './FederatedRoom';
