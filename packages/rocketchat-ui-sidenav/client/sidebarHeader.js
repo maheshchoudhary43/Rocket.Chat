@@ -15,6 +15,8 @@ const setStatus = (status) => {
 	popover.close();
 };
 
+
+
 const viewModeIcon = {
 	extended: 'th-list',
 	medium: 'list',
@@ -39,6 +41,8 @@ const extendedViewOption = (user) => {
 
 	return;
 };
+
+	
 
 const showToolbar = new ReactiveVar(false);
 
@@ -67,6 +71,8 @@ export const toolbarSearch = {
 		}
 	},
 };
+
+let user = Meteor.user();
 
 const toolbarButtons = (user) => [{
 	name: t('Search'),
@@ -236,11 +242,98 @@ const toolbarButtons = (user) => [{
 
 		popover.open(config);
 	},
-}];
+},
+{
+	name: t('Mood'),
+	icon: 'emoji',
+	action: (e) => {
+		const options = [];
+		const config = {
+			popoverClass: 'sidebar-header',
+			columns: [
+				{
+					groups: [
+						{
+							title: t('Mood'),
+							items: [
+								{
+									icon: 'emoji',
+									name: t('Happy'),
+									action: () => 
+									Meteor.call('moodCounter', 'happy', function(error) {
+										if (error) {
+											return handleError(error);
+										}
+									})
+								},
+								{
+									icon: 'emoji',
+									name: t('Not Happy'),
+									action: () => 
+									Meteor.call('moodCounter', 'not_happy', function(error) {
+										if (error) {
+											return handleError(error);
+										}
+									})
+								},
+								{
+									icon: 'emoji',
+									name: t('Confused'),
+									action: () => 
+									Meteor.call('moodCounter', 'confused', function(error) {
+										if (error) {
+											return handleError(error);
+										}
+									})
+								},
+								{
+									icon: 'emoji',
+									name: t('Sad'),
+									action: () => 
+									Meteor.call('moodCounter', 'sad', function(error) {
+										if (error) {
+											return handleError(error);
+										}
+									})
+								},
+							],
+						},
+						{
+							items: [
+								{
+									icon: 'emoji',
+									name: t('Happy Count - '+ Meteor.user().mood_counter.happy),
+								},
+								{
+									icon: 'emoji',
+									name: t('Not Happy Count - '+ Meteor.user().mood_counter.not_happy),
+								},
+								{
+									icon: 'emoji',
+									name: t('Confused Count - '+ Meteor.user().mood_counter.confused),
+								},
+								{
+									icon: 'emoji',
+									name: t('Sad Count - '+ Meteor.user().mood_counter.sad),
+								}
+							],
+						},
+					],
+				},
+			],
+			currentTarget: e.currentTarget,
+			offsetVertical: e.currentTarget.clientHeight + 10,
+		};
+
+		popover.open(config);
+	},
+}
+];
+
+
 Template.sidebarHeader.helpers({
 	myUserInfo() {
 		const id = Meteor.userId();
-
 		if (id == null && settings.get('Accounts_AllowAnonymousRead')) {
 			return {
 				username: 'anonymous',
@@ -342,5 +435,5 @@ Template.sidebarHeader.events({
 
 			popover.open(config);
 		}
-	},
+	}
 });
